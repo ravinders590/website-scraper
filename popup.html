@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="app">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-left">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0969da" stroke-width="2">
+          <rect x="2" y="7" width="20" height="14" rx="2"/>
+          <path d="M16 7V5a4 4 0 00-8 0v2"/>
+        </svg>
+        <h1>Remote.co Scraper</h1>
+      </div>
+      <button id="btnSettings" class="icon-btn" title="Settings">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>
+        </svg>
+      </button>
+    </header>
+
+    <!-- Tab Bar -->
+    <nav class="tab-bar">
+      <button class="tab active" data-tab="dash">Dashboard</button>
+      <button class="tab" data-tab="scrape">Scrape</button>
+      <button class="tab" data-tab="jobs">Jobs</button>
+      <button class="tab" data-tab="export">Export</button>
+    </nav>
+
+    <!-- ─── Dashboard ─── -->
+    <section id="tabDash" class="pane active">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value" id="statTotal">0</div>
+          <div class="stat-label">Total Jobs</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="statCategories">0</div>
+          <div class="stat-label">Categories</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="statRemote">0</div>
+          <div class="stat-label">Fully Remote</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="statToday">0</div>
+          <div class="stat-label">Scraped Today</div>
+        </div>
+      </div>
+
+      <div class="dash-section">
+        <h3>By Industry</h3>
+        <div id="industryBars" class="bar-chart"></div>
+      </div>
+      <div class="dash-section">
+        <h3>By Experience</h3>
+        <div id="expBars" class="bar-chart"></div>
+      </div>
+      <div class="dash-section">
+        <h3>By Location Type</h3>
+        <div id="locBars" class="bar-chart"></div>
+      </div>
+    </section>
+
+    <!-- ─── Scrape ─── -->
+    <section id="tabScrape" class="pane">
+      <div class="scrape-controls">
+        <div class="field-group">
+          <label class="field-label">Categories to Scrape</label>
+          <div class="cat-grid" id="catGrid"></div>
+          <div class="cat-actions">
+            <button class="btn btn-sm btn-outline" id="btnSelectAll">Select All</button>
+            <button class="btn btn-sm btn-outline" id="btnSelectNone">Clear</button>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group field-half">
+            <label class="field-label">Max Pages / Category</label>
+            <select class="select-input" id="maxPages">
+              <option value="1">1 page</option>
+              <option value="2">2 pages</option>
+              <option value="3" selected>3 pages</option>
+              <option value="5">5 pages</option>
+              <option value="10">10 pages</option>
+            </select>
+          </div>
+          <div class="field-group field-half">
+            <label class="cb-label">
+              <input type="checkbox" id="chkDetails">
+              Scrape detail pages
+            </label>
+            <span class="field-hint">Slower — gets full descriptions &amp; apply links</span>
+          </div>
+        </div>
+
+        <div class="scrape-actions">
+          <button class="btn btn-primary" id="btnStartScrape">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
+            Start Scrape
+          </button>
+          <button class="btn btn-danger hidden" id="btnStopScrape">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="6" y="6" width="12" height="12"/>
+            </svg>
+            Stop
+          </button>
+        </div>
+      </div>
+
+      <div id="scrapeProgress" class="scrape-progress hidden">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-text" id="progressText">Initializing…</div>
+        <div class="progress-detail" id="progressDetail"></div>
+      </div>
+
+      <div id="scrapeLog" class="scrape-log hidden"></div>
+    </section>
+
+    <!-- ─── Jobs ─── -->
+    <section id="tabJobs" class="pane">
+      <div class="jobs-toolbar">
+        <input type="text" class="search-input" id="jobSearch" placeholder="Search jobs by title, company, or description…">
+        <div class="filter-row">
+          <select class="select-input filter" id="filterIndustry">
+            <option value="all">All Industries</option>
+          </select>
+          <select class="select-input filter" id="filterExp">
+            <option value="all">All Levels</option>
+            <option value="Entry-level">Entry-level</option>
+            <option value="Mid-level">Mid-level</option>
+            <option value="Senior">Senior</option>
+          </select>
+          <select class="select-input filter" id="filterLoc">
+            <option value="all">All Locations</option>
+            <option value="Remote">Remote</option>
+            <option value="Hybrid">Hybrid</option>
+            <option value="On-site">On-site</option>
+          </select>
+        </div>
+      </div>
+      <div class="jobs-count" id="jobsCount">0 jobs</div>
+      <div id="jobsList" class="jobs-list">
+        <div class="empty-state">No jobs yet. Go to the Scrape tab to start collecting.</div>
+      </div>
+    </section>
+
+    <!-- ─── Export ─── -->
+    <section id="tabExport" class="pane">
+      <div class="export-panel">
+        <h3>Export Jobs</h3>
+        <p class="export-desc">Download scraped and classified job data.</p>
+
+        <div class="field-group">
+          <label class="field-label">Format</label>
+          <select class="select-input" id="exportFormat">
+            <option value="json">JSON</option>
+            <option value="csv">CSV</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Include</label>
+          <select class="select-input" id="exportFilter">
+            <option value="all">All Jobs</option>
+            <option value="remote">Remote Only</option>
+            <option value="hybrid">Hybrid Only</option>
+          </select>
+        </div>
+
+        <div class="export-stats" id="exportStats">0 jobs will be exported</div>
+        <button class="btn btn-primary" id="btnExport">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Download
+        </button>
+
+        <div class="separator"></div>
+        <h3>AI Classification</h3>
+        <p class="export-desc">Enhance job classification using GitHub Models AI (requires token from Settings).</p>
+        <button class="btn btn-outline" id="btnClassify">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2a10 10 0 100 20 10 10 0 000-20z"/>
+            <path d="M12 6v6l4 2"/>
+          </svg>
+          Run AI Classification
+        </button>
+        <div id="classifyStatus" class="classify-status hidden"></div>
+
+        <div class="separator"></div>
+        <button class="btn btn-danger-outline" id="btnClearAll">Clear All Data</button>
+      </div>
+    </section>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

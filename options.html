@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="page">
+    <div class="page-header">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0969da" stroke-width="2">
+        <rect x="2" y="7" width="20" height="14" rx="2"/>
+        <path d="M16 7V5a4 4 0 00-8 0v2"/>
+      </svg>
+      <div>
+        <h1>Remote.co Job Scraper — Settings</h1>
+        <div class="page-sub">Configure AI classification and scraping preferences</div>
+      </div>
+    </div>
+
+    <form id="settingsForm" class="settings-form">
+      <div class="field-group">
+        <label class="field-label" for="githubToken">GitHub Token (for AI Classification)</label>
+        <div class="field-hint">
+          Generate at <a href="https://github.com/settings/tokens" target="_blank">github.com/settings/tokens</a>.
+          Used only for AI-powered NLP classification via GitHub Models.
+          Only requires the <code>read:user</code> scope.
+        </div>
+        <div class="input-wrap">
+          <input type="password" id="githubToken" class="text-input" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+          <button type="button" class="toggle-btn" onclick="toggleTokenVisibility()">&#128065;</button>
+        </div>
+        <div class="token-actions">
+          <button type="button" class="btn btn-sm btn-outline" id="btnTestToken">Test Connection</button>
+        </div>
+        <div id="testStatus" class="test-status hidden"></div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label" for="aiModel">AI Model</label>
+        <select id="aiModel" class="text-select">
+          <option value="gpt-4o" selected>GPT-4o (recommended)</option>
+          <option value="gpt-4o-mini">GPT-4o Mini (faster)</option>
+        </select>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save Settings</button>
+      </div>
+      <div id="saveStatus" class="save-status hidden"></div>
+    </form>
+
+    <div class="info-block">
+      <h3>How It Works</h3>
+      <ol class="how-list">
+        <li><strong>Scraping</strong> — The extension opens Remote.co category pages in background tabs and extracts job listings from the DOM. You can also use the floating "Scrape Jobs" button when browsing Remote.co manually.</li>
+        <li><strong>Local NLP</strong> — Jobs are instantly classified by industry, experience level, and location type using keyword-based pattern matching.</li>
+        <li><strong>AI Enhancement</strong> — Optionally run AI classification via GitHub Models for more accurate title normalization and industry/experience mapping.</li>
+        <li><strong>Export</strong> — Download your classified and deduplicated jobs as JSON or CSV for analysis, database import, or further processing.</li>
+      </ol>
+    </div>
+
+    <div class="info-block">
+      <h3>Supported Categories</h3>
+      <div class="info-sub">The extension supports 40+ Remote.co job categories including:</div>
+      <p class="cat-list">Developer, Software Engineer, IT, Marketing, Healthcare, Sales, Design, QA, Customer Service, Operations, Writing, HR, Finance, Legal, Education, Engineering, and many more.</p>
+    </div>
+  </div>
+  <script src="options.js"></script>
+</body>
+</html>

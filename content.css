@@ -1,0 +1,66 @@
+/* Remote.co Job Scraper — Content Script Styles */
+
+#rjs-scrape-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: #0969da;
+  color: #fff;
+  border: none;
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+#rjs-scrape-btn:hover {
+  background: #0553bb;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+}
+#rjs-scrape-btn.rjs-loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+#rjs-toast {
+  position: fixed;
+  bottom: 80px;
+  right: 24px;
+  z-index: 99999;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  transition: all 0.3s;
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+}
+#rjs-toast.rjs-toast-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+#rjs-toast.rjs-toast-success {
+  background: #1a7f37;
+  color: #fff;
+}
+#rjs-toast.rjs-toast-error {
+  background: #cf222e;
+  color: #fff;
+}
+
+.rjs-extracted {
+  outline: 2px solid #0969da !important;
+  outline-offset: 2px;
+  border-radius: 4px;
+}

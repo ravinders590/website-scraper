@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "Remote.co Job Scraper",
+  "version": "1.0.0",
+  "description": "Scrape, classify, and export Remote.co job listings with NLP-powered categorization.",
+  "permissions": ["storage", "downloads", "tabs", "scripting", "activeTab"],
+  "host_permissions": [
+    "https://remote.co/*",
+    "https://models.inference.ai.azure.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Remote.co Job Scraper"
+  },
+  "options_page": "options.html",
+  "content_scripts": [
+    {
+      "matches": ["https://remote.co/*"],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
